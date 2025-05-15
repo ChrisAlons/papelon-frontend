@@ -3,6 +3,7 @@ import React from 'react';
 import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom';
 import { UsuariosList } from './pages/UsuariosList';
 import {Sidebar} from "./components/Sidebar";
+import "./App.css";
 // luego importaremos ClienteList, ProductoList, etc.
 
 export const App: React.FC = () => (
