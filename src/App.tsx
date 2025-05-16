@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-d
 // import { Productos }from "./pages/Productos";
 import  Usuarios  from "./pages/Usuarios";
 import {Layout} from "./components/Layout";
+import Productos from "./pages/Productos";
 
 
 const App: React.FC = () => (
@@ -12,6 +13,8 @@ const App: React.FC = () => (
         <Route path="/" element={<Navigate to="/productos" />} />
         {/* <Route path="/productos" element={<Productos />} /> */}
         <Route path="/usuarios" element={<Usuarios />} />
+				<Route path="/productos" element={<Productos />} />
+				
         {/* Más rutas aquí */}
       </Routes>
     </Layout>

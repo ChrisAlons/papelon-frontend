@@ -1,7 +1,13 @@
+// src/types/Producto.ts
 export interface Producto {
   id: number;
   nombre: string;
-  precio: number;
-  stock: number;
-  // Agrega aquí otros campos según tu backend
+  descripcion: string;
+  precioCompra: number;
+  precioVenta: number;
+  createdAt: string;
+  updatedAt: string;
 }
+
+// Tipo auxiliar para crear/editar productos (sin campos autogenerados)
+export type ProductoCrear = Omit<Producto, "id" | "createdAt" | "updatedAt">;
