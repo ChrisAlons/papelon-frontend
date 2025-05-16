@@ -91,7 +91,7 @@ const UserTable: React.FC = () => {
   return (
     <div className="w-full max-w-2xl mx-auto">
       <div className="flex justify-end mb-4">
-        <button className="btn btn-primary" onClick={() => setModalOpen("create")}>
+        <button className="btn btn-success" onClick={() => setModalOpen("create")}>
           + Nuevo Usuario
         </button>
       </div>
@@ -147,7 +147,7 @@ const UserTable: React.FC = () => {
       {/* Modal para crear usuario */}
       {modalOpen === "create" && (
         <dialog open className="modal modal-open">
-          <form method="dialog" className="modal-box" onSubmit={handleCreateSubmit}>
+          <form method="dialog" className="modal-box max-w-sm" onSubmit={handleCreateSubmit}>
             <h3 className="font-bold text-lg mb-4">Crear Usuario</h3>
             <div className="mb-2">
               <input
@@ -160,7 +160,20 @@ const UserTable: React.FC = () => {
                 required
               />
             </div>
+            
             <div className="mb-2">
+              <input
+                type="password"
+                name="password"
+                className="input input-bordered w-full"
+                placeholder="Contraseña"
+                value={createForm.password}
+                onChange={handleCreateChange}
+                required
+              />
+            </div>
+
+						<div className="mb-2">
               <select
                 name="rol"
                 className="select select-bordered w-full"
@@ -173,24 +186,15 @@ const UserTable: React.FC = () => {
                 <option value="CAJERO">CAJERO</option>
               </select>
             </div>
-            <div className="mb-2">
-              <input
-                type="password"
-                name="password"
-                className="input input-bordered w-full"
-                placeholder="Contraseña"
-                value={createForm.password}
-                onChange={handleCreateChange}
-                required
-              />
-            </div>
-            <div className="modal-action">
-              <button type="submit" className="btn btn-primary">
+
+            <div className="modal-action justify-center">
+              <button type="submit" 
+							className="btn btn-success rounded-full">
                 Crear
               </button>
               <button
                 type="button"
-                className="btn"
+                className="btn btn-error rounded-full"
                 onClick={() => setModalOpen(null)}
               >
                 Cancelar
@@ -203,7 +207,7 @@ const UserTable: React.FC = () => {
       {/* Modal para editar usuario */}
       {modalOpen === "edit" && (
         <dialog open className="modal modal-open">
-          <form method="dialog" className="modal-box" onSubmit={handleEditSubmit}>
+          <form method="dialog" className="modal-box max-w-sm" onSubmit={handleEditSubmit}>
             <h3 className="font-bold text-lg mb-4">Editar Usuario</h3>
             <div className="mb-2">
               <input
@@ -229,13 +233,13 @@ const UserTable: React.FC = () => {
                 <option value="CAJERO">CAJERO</option>
               </select>
             </div>
-            <div className="modal-action">
-              <button type="submit" className="btn btn-primary">
+            <div className="modal-action justify-center">
+              <button type="submit" className="btn btn-success rounded-full">
                 Actualizar
               </button>
               <button
                 type="button"
-                className="btn"
+                className="btn btn-error rounded-full"
                 onClick={() => setModalOpen(null)}
               >
                 Cancelar
