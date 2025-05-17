@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-d
 import  Usuarios  from "./pages/Usuarios";
 import {Layout} from "./components/Layout";
 import Productos from "./pages/Productos";
+import Inventario from "./pages/Inventario";
 
 
 const App: React.FC = () => (
@@ -14,7 +15,8 @@ const App: React.FC = () => (
         {/* <Route path="/productos" element={<Productos />} /> */}
         <Route path="/usuarios" element={<Usuarios />} />
 				<Route path="/productos" element={<Productos />} />
-				
+				<Route path="/inventario" element={<Inventario />} />
+
         {/* Más rutas aquí */}
       </Routes>
     </Layout>

@@ -17,6 +17,8 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => (
           { to: '/usuarios',  label: 'Usuarios' },
           { to: '/clientes',  label: 'Clientes' },
           { to: '/productos', label: 'Productos' },
+					{ to: '/inventario', label: 'Inventario' },
+					{ to: '/proveedores', label: 'Proveedores' },
           { to: '/compras',   label: 'Compras' },
           { to: '/ventas',    label: 'Ventas' },
         ].map(({ to, label }) => (
@@ -24,7 +26,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => (
             key={to}
             to={to}
             className={({ isActive }) =>
-              `block mb-2 px-4 py-2 rounded-lg transition-all font-medium
+              `block mb-2 px-4 py-2 rounded-lg transition-all font-medium 
               ${
                 isActive
                   ? 'bg-blue-600 text-white shadow'
@@ -41,7 +43,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => (
       </div>
     </aside>
     {/* Main Content */}
-    <main className="flex-1 p-8 bg-base-100 overflow-auto text-center">
+    <main className="flex-1 p-0 bg-base-100 overflow-auto text-center">
       {children}
     </main>
   </div>
