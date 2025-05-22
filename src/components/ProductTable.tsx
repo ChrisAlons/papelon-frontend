@@ -84,7 +84,7 @@ const ProductTable: React.FC = () => {
 
   return (
     <div className="w-full mx-auto">
-      <div className="flex justify-end mb-4">
+      <div className="flex justify-center mb-4">
         <button className="btn btn-success" onClick={() => setModalOpen("create")}>
           + Nuevo Producto
         </button>

@@ -5,6 +5,7 @@ import  Usuarios  from "./pages/Usuarios";
 import {Layout} from "./components/Layout";
 import Productos from "./pages/Productos";
 import Inventario from "./pages/Inventario";
+import Compras from "./pages/Compras";
 
 
 const App: React.FC = () => (
@@ -16,6 +17,8 @@ const App: React.FC = () => (
         <Route path="/usuarios" element={<Usuarios />} />
 				<Route path="/productos" element={<Productos />} />
 				<Route path="/inventario" element={<Inventario />} />
+				<Route path="/compras" element={<Compras />} />
+
 
         {/* Más rutas aquí */}
       </Routes>
