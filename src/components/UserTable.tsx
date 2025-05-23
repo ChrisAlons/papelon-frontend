@@ -90,7 +90,7 @@ const UserTable: React.FC = () => {
 
   return (
     <div className="w-full max-w-2xl mx-auto">
-      <div className="flex justify-end mb-4">
+      <div className="flex justify-center mb-4">
         <button className="btn btn-success" onClick={() => setModalOpen("create")}>
           + Nuevo Usuario
         </button>

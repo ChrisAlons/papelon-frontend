@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import type { Inventario } from "../types/Inventario";
+import { useUserStore } from "./userStore";
 
 interface InventarioState {
   inventarios: Inventario[];
@@ -17,7 +18,8 @@ export const useInventarioStore = create<InventarioState>((set) => ({
   fetchInventario: async () => {
     set({ loading: true, error: null });
     try {
-      const res = await fetch(API_URL);
+      const token = useUserStore.getState().basicAuth;
+      const res = await fetch(API_URL, { headers: token ? { Authorization: token } : {} });
       if (!res.ok) throw new Error("Error al obtener inventario");
       const raw = await res.json();
       set({ inventarios: raw.data ?? [], loading: false });

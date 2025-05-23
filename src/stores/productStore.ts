@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import type { Producto } from "../types/Producto";
+import { useUserStore } from "./userStore";
 
 // Tipo para crear producto (sin id, createdAt ni updatedAt)
 export type ProductoCrear = Omit<Producto, "id" | "createdAt" | "updatedAt">;
@@ -24,7 +25,10 @@ export const useProductStore = create<ProductState>((set, get) => ({
   fetchProducts: async () => {
     set({ loading: true, error: null });
     try {
-      const res = await fetch(API_URL);
+      const headers: any = {};
+      const token = useUserStore.getState().basicAuth;
+      if (token) headers.Authorization = token;
+      const res = await fetch(API_URL, { headers });
       if (!res.ok) throw new Error("Error al obtener productos");
       const raw = await res.json();
       set({ products: raw.data ?? [], loading: false });
@@ -36,9 +40,10 @@ export const useProductStore = create<ProductState>((set, get) => ({
   addProduct: async (product) => {
     set({ loading: true, error: null });
     try {
+      const token = useUserStore.getState().basicAuth;
       const res = await fetch(API_URL, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", ...(token ? { Authorization: token } : {}) },
         body: JSON.stringify(product),
       });
       if (!res.ok) throw new Error("Error al crear producto");
@@ -51,9 +56,10 @@ export const useProductStore = create<ProductState>((set, get) => ({
   updateProduct: async (id, product) => {
     set({ loading: true, error: null });
     try {
+      const token = useUserStore.getState().basicAuth;
       const res = await fetch(`${API_URL}/${id}`, {
         method: "PUT",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", ...(token ? { Authorization: token } : {}) },
         body: JSON.stringify(product),
       });
       if (!res.ok) throw new Error("Error al actualizar producto");
@@ -66,7 +72,8 @@ export const useProductStore = create<ProductState>((set, get) => ({
   deleteProduct: async (id) => {
     set({ loading: true, error: null });
     try {
-      const res = await fetch(`${API_URL}/${id}`, { method: "DELETE" });
+      const token = useUserStore.getState().basicAuth;
+      const res = await fetch(`${API_URL}/${id}`, { method: "DELETE", headers: token ? { Authorization: token } : {} });
       if (!res.ok) throw new Error("Error al eliminar producto");
       await get().fetchProducts();
     } catch (error: any) {

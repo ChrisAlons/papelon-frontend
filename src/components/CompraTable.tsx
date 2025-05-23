@@ -13,9 +13,8 @@ const CompraTable: React.FC = () => {
 
   return (
     <div className="w-full max-w-4xl mx-auto">
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl font-bold">Compras</h2>
-        <Link to="/compras/nueva" className="btn btn-primary">Nueva Compra</Link>
+      <div className="flex justify-center mb-4">
+        <Link to="/compras/nueva" className="btn btn-success">Nueva Compra</Link>
       </div>
       <div className="overflow-x-auto">
         <table className="table table-zebra w-full">

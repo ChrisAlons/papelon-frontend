@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import type { Compra } from "../types/Compra";
+import { useUserStore } from "./userStore";
 
 interface CompraState {
   compras: Compra[];
@@ -18,7 +19,8 @@ export const useCompraStore = create<CompraState>((set, get) => ({
   fetchCompras: async () => {
     set({ loading: true, error: null });
     try {
-      const res = await fetch(API_URL);
+      const token = useUserStore.getState().basicAuth;
+      const res = await fetch(API_URL, { headers: token ? { Authorization: token } : {} });
       if (!res.ok) throw new Error("Error al obtener compras");
       const raw = await res.json();
       set({ compras: raw.data ?? [], loading: false });
@@ -29,9 +31,10 @@ export const useCompraStore = create<CompraState>((set, get) => ({
   createCompra: async (compra) => {
     set({ loading: true, error: null });
     try {
+      const token = useUserStore.getState().basicAuth;
       const res = await fetch(API_URL, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', ...(token ? { Authorization: token } : {}) },
         body: JSON.stringify(compra),
       });
       if (!res.ok) {
