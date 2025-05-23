@@ -8,7 +8,7 @@ import type { VentaRequest, DetalleVentaRequest } from '../types/VentaRequest';
 import { useNavigate } from 'react-router-dom';
 
 const NuevaVenta: React.FC = () => {
-  const { users, fetchUsers } = useUserStore();
+  const { users, fetchUsers, currentUser } = useUserStore();
   const { clientes, fetchClientes } = useClienteStore();
   const { products, fetchProducts } = useProductStore();
   const { createVenta, loading: loadingVenta, error: errorVenta } = useVentaStore();
@@ -25,6 +25,10 @@ const NuevaVenta: React.FC = () => {
     fetchUsers();
     fetchClientes();
     fetchProducts();
+    // Si el usuario es cajero, setear usuarioId automáticamente
+    if (currentUser && currentUser.rol === 'CAJERO') {
+      setUsuarioId(currentUser.id);
+    }
   }, []);
 
   const handleItemChange = (
@@ -82,16 +86,25 @@ const NuevaVenta: React.FC = () => {
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label className="block font-medium">Usuario</label>
-          <select
-            className="select select-bordered w-full"
-            value={usuarioId}
-            onChange={e => setUsuarioId(e.target.value ? Number(e.target.value) : '')}
-          >
-            <option value="">Selecciona usuario</option>
-            {users.map(u => (
-              <option key={u.id} value={u.id}>{u.username}</option>
-            ))}
-          </select>
+          {currentUser && currentUser.rol === 'CAJERO' ? (
+            <input
+              type="text"
+              className="input input-bordered w-full bg-gray-100"
+              value={currentUser.username + ' (CAJERO)'}
+              disabled
+            />
+          ) : (
+            <select
+              className="select select-bordered w-full"
+              value={usuarioId}
+              onChange={e => setUsuarioId(e.target.value ? Number(e.target.value) : '')}
+            >
+              <option value="">Selecciona usuario</option>
+              {users.map(u => (
+                <option key={u.id} value={u.id}>{u.username}</option>
+              ))}
+            </select>
+          )}
         </div>
         <div>
           <label className="block font-medium">Cliente (opcional)</label>

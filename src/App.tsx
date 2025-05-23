@@ -1,9 +1,10 @@
 import "./App.css"
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import  Usuarios  from "./pages/Usuarios";
+import Usuarios from "./pages/Usuarios";
 import {Layout} from "./components/Layout";
 import Productos from "./pages/Productos";
 import Inventario from "./pages/Inventario";
+import Dashboard from "./pages/Dashboard";
 import Compras from "./pages/Compras";
 import NuevaCompra from "./pages/NuevaCompra";
 import Proveedores from "./pages/Proveedores";
@@ -12,6 +13,7 @@ import Ventas from "./pages/Ventas";
 import NuevaVenta from "./pages/NuevaVenta";
 import Login from "./pages/Login";
 import RequireAuth from "./components/RequireAuth";
+import HomeRedirect from "./components/HomeRedirect";
 
 const App: React.FC = () => (
   <Router>
@@ -21,7 +23,8 @@ const App: React.FC = () => (
       {/* Protected */}
       <Route element={<RequireAuth />}>
         <Route element={<Layout />} >
-          <Route path="/" element={<Navigate to="/productos" replace />} />
+          <Route path="/" element={<HomeRedirect />} />
+          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/usuarios" element={<Usuarios />} />
           <Route path="/productos" element={<Productos />} />
           <Route path="/inventario" element={<Inventario />} />

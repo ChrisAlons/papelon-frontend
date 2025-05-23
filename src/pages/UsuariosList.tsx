@@ -12,13 +12,6 @@ export const UsuariosList: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-blue-50">
-      {/* Header */}
-      {/*<header className="bg-blue-600 text-white shadow-md">*/}
-      {/*  <div className="max-w-7xl mx-auto px-4 py-4 flex items-center">*/}
-      {/*    <h1 className="text-2xl font-semibold">Papelon Dashboard</h1>*/}
-      {/*  </div>*/}
-      {/*</header>*/}
-
       <div className="max-w-7xl mx-auto px-4 py-6">
         {/* Card container */}
         <div className="bg-white shadow rounded-lg overflow-hidden">
