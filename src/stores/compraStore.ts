@@ -6,11 +6,12 @@ interface CompraState {
   loading: boolean;
   error: string | null;
   fetchCompras: () => Promise<void>;
+  createCompra: (compra: import('../types/CompraRequest').CompraRequest) => Promise<void>;
 }
 
 const API_URL = `${import.meta.env.VITE_API_BASE_URL}/compras`;
 
-export const useCompraStore = create<CompraState>((set) => ({
+export const useCompraStore = create<CompraState>((set, get) => ({
   compras: [],
   loading: false,
   error: null,
@@ -23,6 +24,24 @@ export const useCompraStore = create<CompraState>((set) => ({
       set({ compras: raw.data ?? [], loading: false });
     } catch (error: any) {
       set({ error: error.message, loading: false });
+    }
+  },
+  createCompra: async (compra) => {
+    set({ loading: true, error: null });
+    try {
+      const res = await fetch(API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(compra),
+      });
+      if (!res.ok) {
+        const err = await res.json().catch(() => null);
+        throw new Error(err?.message || 'Error al crear compra');
+      }
+      await get().fetchCompras();
+    } catch (error: any) {
+      set({ error: error.message, loading: false });
+      throw error;
     }
   }
 }));

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useCompraStore } from "../stores/compraStore";
 import type { Compra } from "../types/Compra";
+import { Link } from "react-router-dom";
 
 const CompraTable: React.FC = () => {
   const { compras, loading, error, fetchCompras } = useCompraStore();
@@ -12,7 +13,10 @@ const CompraTable: React.FC = () => {
 
   return (
     <div className="w-full max-w-4xl mx-auto">
-      <h2 className="text-xl font-bold mb-4">Compras</h2>
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-xl font-bold">Compras</h2>
+        <Link to="/compras/nueva" className="btn btn-primary">Nueva Compra</Link>
+      </div>
       <div className="overflow-x-auto">
         <table className="table table-zebra w-full">
           <thead>
@@ -57,49 +61,53 @@ const CompraTable: React.FC = () => {
 
       {/* Modal de detalle */}
       {detalleOpen !== null && (
-        <dialog open className="modal modal-open" onClick={() => setDetalleOpen(null)}>
-          <div className="modal-box max-w-lg p-6" onClick={e => e.stopPropagation()}>
-            <h3 className="font-bold text-lg mb-4">
-              Detalle de compra #{detalleOpen.id}
-            </h3>
-            <table className="table table-sm w-full mb-4">
-              <thead>
+          <dialog open className="modal modal-open" onClick={() => setDetalleOpen(null)}>
+            <div className="modal-box max-w-lg p-6" onClick={e => e.stopPropagation()}>
+              <h3 className="font-bold text-lg mb-4">
+                Detalle de compra #{detalleOpen.id}
+              </h3>
+              <table className="table table-sm w-full mb-4">
+                <thead>
                 <tr>
                   <th>Producto</th>
                   <th>Cantidad</th>
                   <th>Precio unitario</th>
                   <th>Subtotal</th>
                 </tr>
-              </thead>
-              <tbody>
+                </thead>
+                <tbody>
                 {Array.isArray(detalleOpen.detalles) && detalleOpen.detalles.length === 0 ? (
-                  <tr>
-                    <td colSpan={4} className="text-center">
-                      No hay detalles.
-                    </td>
-                  </tr>
-                ) : (
-                  detalleOpen.detalles.map((detalle) => (
-                    <tr key={detalle.id}>
-                      <td>{detalle.nombreProducto}</td>
-                      <td>{detalle.cantidad}</td>
-                      <td>{detalle.precioUnitario}</td>
-                      <td>{Number(detalle.cantidad) * Number(detalle.precioUnitario)}</td>
+                    <tr>
+                      <td colSpan={4} className="text-center">
+                        No hay detalles.
+                      </td>
                     </tr>
-                  ))
+                ) : (
+                    detalleOpen.detalles.map((detalle) => (
+                        <tr key={detalle.id}>
+                          <td>{detalle.nombreProducto}</td>
+                          <td>{detalle.cantidad}</td>
+                          <td>{detalle.precioUnitario}</td>
+                          <td>{(detalle.cantidad * detalle.precioUnitario).toFixed(2)}</td>
+                        </tr>
+                    ))
                 )}
-              </tbody>
-            </table>
-            <div className="flex justify-center">
-              <button
-                className="btn btn-error rounded-full"
-                onClick={() => setDetalleOpen(null)}
-              >
-                Cerrar
-              </button>
+                </tbody>
+              </table>
+              {/* Monto total */}
+              <div className="text-right font-bold text-lg mt-4">
+                Total: {detalleOpen.detalles.reduce((sum, detalle) => sum + (detalle.cantidad * detalle.precioUnitario), 0).toFixed(2)}
+              </div>
+              <div className="flex justify-center mt-4">
+                <button
+                    className="btn btn-error rounded-full"
+                    onClick={() => setDetalleOpen(null)}
+                >
+                  Cerrar
+                </button>
+              </div>
             </div>
-          </div>
-        </dialog>
+          </dialog>
       )}
 
       {loading && <span className="loading loading-spinner text-primary"></span>}

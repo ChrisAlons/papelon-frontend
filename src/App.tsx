@@ -6,6 +6,7 @@ import {Layout} from "./components/Layout";
 import Productos from "./pages/Productos";
 import Inventario from "./pages/Inventario";
 import Compras from "./pages/Compras";
+import NuevaCompra from "./pages/NuevaCompra";
 
 
 const App: React.FC = () => (
@@ -13,12 +14,11 @@ const App: React.FC = () => (
     <Layout>
       <Routes>
         <Route path="/" element={<Navigate to="/productos" />} />
-        {/* <Route path="/productos" element={<Productos />} /> */}
         <Route path="/usuarios" element={<Usuarios />} />
-				<Route path="/productos" element={<Productos />} />
-				<Route path="/inventario" element={<Inventario />} />
-				<Route path="/compras" element={<Compras />} />
-
+        <Route path="/productos" element={<Productos />} />
+        <Route path="/inventario" element={<Inventario />}></Route>
+        <Route path="/compras" element={<Compras />} />
+        <Route path="/compras/nueva" element={<NuevaCompra />} />
 
         {/* Más rutas aquí */}
       </Routes>
